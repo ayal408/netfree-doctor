@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>netfree-doctor</title>
+<meta name="description" content="כלי שמאבחן בעיות של &quot;זה לא עובד בנטפרי&quot;, מסביר בעברית ומציע תיקונים בטוחים. לא עוקף את הסינון.">
+<style>
+  :root {
+    --bg: #f7f7f4; --surface: #ffffff; --text: #1d1f21; --muted: #5b6066;
+    --border: #e2e2dc; --accent: #1f6f5c; --accent-soft: #e3f1ec;
+    --danger: #a3332b; --danger-soft: #f9e7e5; --code-bg: #f0f0eb;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131516; --surface: #1b1e20; --text: #e7e8e6; --muted: #9aa0a6;
+      --border: #2c3033; --accent: #5cc4a6; --accent-soft: #17302a;
+      --danger: #ef8a80; --danger-soft: #331b19; --code-bg: #24282b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.65 system-ui, "Segoe UI", Arial, sans-serif;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+  header { padding: 64px 0 40px; }
+  h1 { font-size: clamp(32px, 6vw, 48px); margin: 0 0 12px; letter-spacing: -0.5px; direction: ltr; text-align: right; }
+  .lead { font-size: 20px; color: var(--muted); margin: 0 0 24px; max-width: 46em; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 10px 20px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; border: 1px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn.ghost { color: var(--accent); }
+  .notice {
+    background: var(--accent-soft); border-inline-start: 4px solid var(--accent);
+    padding: 16px 20px; border-radius: 8px; margin: 0 0 48px;
+  }
+  section { margin: 0 0 56px; }
+  h2 { font-size: 26px; margin: 0 0 16px; }
+  h3 { font-size: 19px; margin: 0 0 6px; }
+  p { margin: 0 0 12px; }
+  code {
+    font-family: Consolas, "Cascadia Mono", monospace; font-size: 0.88em;
+    background: var(--code-bg); padding: 1px 6px; border-radius: 4px; direction: ltr; unicode-bidi: embed;
+  }
+  pre {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; overflow-x: auto; direction: ltr; text-align: left; margin: 0 0 12px;
+  }
+  pre code { background: none; padding: 0; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px;
+  }
+  .card .id { font-size: 13px; color: var(--muted); }
+  .card p { margin: 6px 0 0; font-size: 15px; }
+  .card .fix { margin-top: 10px; font-size: 14px; color: var(--accent); font-weight: 600; }
+  .bad { background: var(--danger-soft); border-inline-start: 4px solid var(--danger); padding: 16px 20px; border-radius: 8px; }
+  .bad ul { margin: 8px 0 0; padding-inline-start: 20px; }
+  ul.plain { padding-inline-start: 20px; margin: 0; }
+  ul.plain li { margin-bottom: 8px; }
+  .en { direction: ltr; text-align: left; border-top: 1px solid var(--border); padding-top: 40px; }
+  footer { color: var(--muted); font-size: 14px; padding: 24px 0 48px; border-top: 1px solid var(--border); }
+  footer a, section a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>netfree-doctor</h1>
+  <p class="lead">כלי שמאבחן בלחיצה אחת בעיות של "זה לא עובד בנטפרי", מסביר <strong>בעברית</strong> מה הבעיה, ומציע תיקונים בטוחים למחשב שלכם.</p>
+  <div class="btns">
+    <a class="btn primary" href="https://github.com/ayal408/netfree-doctor">לקוד ב-GitHub</a>
+    <a class="btn ghost" href="#run">איך מריצים</a>
+  </div>
+</header>
+
+<div class="notice">
+  <strong>הכלי לא עוקף את הסינון.</strong> הוא לא מציע VPN, פרוקסי, מנהרות DNS או כל דרך אחרת לעקוף את נטפרי, וגם לא מכבה בדיקות אבטחה.
+  המטרה היא אחת: לגרום לדברים לעבוד <strong>עם</strong> נטפרי.
+</div>
+
+<section>
+  <h2>למה צריך את זה?</h2>
+  <p>נטפרי מסננת גם אתרים מוצפנים (HTTPS). לשם כך היא מציגה לכל אתר תעודה שהיא חתמה עליה, ולכן המחשב צריך לסמוך על <strong>תעודת השורש של נטפרי</strong>.</p>
+  <p>הדפדפן משתמש במאגר התעודות של Windows, אבל הרבה תוכנות מחזיקות מאגר תעודות משלהן. לכן הן נכשלות עם שגיאות כמו
+  <code>UNABLE_TO_GET_ISSUER_CERT_LOCALLY</code>, <code>SELF_SIGNED_CERT_IN_CHAIN</code>, <code>CERTIFICATE_VERIFY_FAILED</code> או <code>SSL certificate problem</code>.
+  זה קורה למשל ב-Node/npm, ב-Python/pip, ב-Git, ב-Java, ב-Firefox ובאמולטורים של אנדרואיד.</p>
+</section>
+
+<section id="run">
+  <h2>איך מריצים</h2>
+  <p>דרישות: Windows 10/11 ו-Node.js 20 ומעלה.</p>
+<pre><code>git clone https://github.com/ayal408/netfree-doctor
+cd netfree-doctor
+npm install
+npm run build
+
+node dist/cli/index.js                          # all checks (Hebrew output)
+node dist/cli/index.js check https://chatgpt.com
+node dist/cli/index.js fix node-extra-ca --dry-run
+node dist/cli/index.js fix node-extra-ca
+node dist/cli/index.js undo
+npm run gui                                     # GUI window</code></pre>
+  <p>אפשרויות: <code>--en</code>, <code>--json</code>, <code>--yes</code>, <code>--dry-run</code>, <code>--only node,git</code>, <code>--verbose</code>, <code>--no-color</code>.
+  קוד היציאה הוא <code>0</code> כשאין תקלות ו-<code>2</code> כשנמצאה תקלה.</p>
+</section>
+
+<section>
+  <h2>מה נבדק</h2>
+  <div class="grid">
+    <div class="card"><div class="id">netfree</div><h3>האם עוברים דרך נטפרי</h3>
+      <p>חיבור TLS לכמה אתרים ובדיקה מי הנפיק את התעודה ועד איזו תעודת שורש מגיעה השרשרת.</p></div>
+    <div class="card"><div class="id">windows-store</div><h3>תעודות במאגר Windows</h3>
+      <p>האם תעודות השורש הרשמיות של נטפרי מותקנות, לפי טביעת אצבע.</p>
+      <div class="fix">הפניה למדריך הרשמי בלבד</div></div>
+    <div class="card"><div class="id">firefox</div><h3>Firefox</h3>
+      <p>האם <code>security.enterprise_roots.enabled</code> מופעל בכל פרופיל.</p>
+      <div class="fix">תיקון: כתיבה ל-user.js</div></div>
+    <div class="card"><div class="id">node</div><h3>Node / npm</h3>
+      <p><code>NODE_EXTRA_CA_CERTS</code>, ה-cafile של npm, ו-<code>strict-ssl=false</code> שהוגדר בטעות.</p>
+      <div class="fix">תיקון: קובץ PEM משולב ומשתנה סביבה</div></div>
+    <div class="card"><div class="id">python</div><h3>Python / pip</h3>
+      <p><code>pip config</code>, ‏<code>REQUESTS_CA_BUNDLE</code> ובדיקות חיבור אמיתיות, כולל בעיית Python 3.13.</p>
+      <div class="fix">תיקון: certifi + נטפרי ל-pip</div></div>
+    <div class="card"><div class="id">git</div><h3>Git</h3>
+      <p><code>http.sslBackend</code>, ‏<code>sslCAInfo</code> ו-<code>sslVerify=false</code> המסוכן.</p>
+      <div class="fix">תיקון: sslBackend schannel</div></div>
+    <div class="card"><div class="id">java</div><h3>Java</h3>
+      <p>איתור Java ופקודת <code>keytool</code> המדויקת, או <code>Windows-ROOT</code>.</p>
+      <div class="fix">הסבר בלבד</div></div>
+    <div class="card"><div class="id">android</div><h3>אמולטורים של אנדרואיד</h3>
+      <p>LDPlayer, Android Studio ו-BlueStacks, והסבר על תעודות משתמש מול תעודות מערכת.</p>
+      <div class="fix">הסבר בלבד, בלי root</div></div>
+    <div class="card"><div class="id">check &lt;url&gt;</div><h3>בדיקת כתובת אחת</h3>
+      <p>DNS, ‏TCP, ‏TLS ו-HTTP. מזהה דף חסימה (418) ואת סיבת החסימה, הערות שנטפרי מוסיפה לאתר, ו-WebSocket.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>עקרונות בטיחות</h2>
+  <ul class="plain">
+    <li><strong>רק הגדרות של המשתמש הנוכחי.</strong> אין שינוי בהגדרות המחשב כולו ואין צורך בהרשאות מנהל.</li>
+    <li><strong>dry-run לכל תיקון.</strong> לפני ביצוע מוצג בדיוק מה ייכתב, ונשאלת שאלת אישור.</li>
+    <li><strong>גיבוי ויומן.</strong> כל קובץ מגובה לפני שינוי, ו-<code>undo</code> מחזיר את המצב הקודם.</li>
+    <li><strong>כתיבה רק בתוך תיקיית המשתמש.</strong></li>
+    <li><strong>תעודות מוצמדות.</strong> תעודה שהורדה מתקבלת רק אם טביעת האצבע שלה מוכרת.</li>
+  </ul>
+  <div class="bad" style="margin-top:20px">
+    <strong>אין כיבוי של אימות TLS. לעולם.</strong> אלה ה"פתרונות" השגויים שממליצים עליהם בפורומים, והכלי מסרב לבצע אותם:
+    <ul>
+      <li><code>NODE_TLS_REJECT_UNAUTHORIZED=0</code></li>
+      <li><code>git config http.sslVerify false</code></li>
+      <li><code>npm config set strict-ssl false</code></li>
+      <li><code>pip --trusted-host</code>, ‏<code>verify=False</code>, ‏<code>PYTHONHTTPSVERIFY=0</code></li>
+      <li><code>curl -k</code> / <code>--insecure</code></li>
+      <li>כל VPN, פרוקסי או SOCKS</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>ממצא חשוב: Python 3.13 ומעלה</h2>
+  <p>החל מ-Python 3.13 מופעלת כברירת מחדל בדיקה מחמירה (<code>VERIFY_X509_STRICT</code>).
+  לתעודת השורש של נטפרי שבשימוש כרגע (<code>NetFree Root CA 1990-2200 RSA</code>) <strong>חסרה ההרחבה Key Usage</strong>, ולכן requests ו-urllib נכשלים גם כשהכול מוגדר נכון.
+  הכלי מזהה את המצב וממליץ על <code>pip-system-certs</code> או על <code>truststore</code>, שמאמתים מול מאגר Windows.</p>
+</section>
+
+<section class="en" lang="en" dir="ltr">
+  <h2>English</h2>
+  <p><strong>netfree-doctor</strong> diagnoses "doesn't work on Netfree" problems and explains them in Hebrew (<code>--en</code> for English).
+  Netfree is an Israeli filtering ISP that inspects HTTPS with its own root CAs. Browsers that use the Windows store are fine, but tools with their own
+  CA stores (Node/npm, Python, Git, Java, Firefox, Android emulators) fail with TLS errors.</p>
+  <p>Fixes change per-user configuration only, show a dry-run first, back up every file, and can be undone.
+  <strong>It never bypasses the filter and never disables TLS verification.</strong></p>
+</section>
+
+<footer>
+  MIT © ayal408 · <a href="https://github.com/ayal408/netfree-doctor">github.com/ayal408/netfree-doctor</a>
+</footer>
+
+</div>
+</body>
+</html>
