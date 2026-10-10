@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>netfree-doctor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <h1>netfree-doctor</h1>
+        <p class="tagline">אבחון ותיקון בטוח של בעיות "לא עובד בנטפרי"</p>
+      </div>
+      <button id="run" class="primary">הפעל בדיקה</button>
+    </header>
+
+    <main>
+      <section class="url-box" aria-label="בדיקת כתובת">
+        <form id="url-form">
+          <label for="url">בדיקת כתובת מסוימת (אתר, API או wss://):</label>
+          <div class="row">
+            <input id="url" type="text" dir="ltr" placeholder="https://chatgpt.com" autocomplete="off" spellcheck="false" />
+            <button type="submit" class="secondary">בדוק כתובת</button>
+          </div>
+        </form>
+        <div id="url-result"></div>
+      </section>
+
+      <div id="summary" class="summary" hidden></div>
+      <section id="results" class="cards" aria-live="polite">
+        <p class="empty">לחצו על "הפעל בדיקה" כדי לבדוק את המחשב.</p>
+      </section>
+    </main>
+
+    <footer>
+      <span>הכלי עוזר לדברים לעבוד <b>עם</b> נטפרי. הוא לא עוקף את הסינון ולא מכבה בדיקות אבטחה. כל תיקון מגובה וניתן לביטול.</span>
+      <button id="undo" class="link">ביטול התיקון האחרון</button>
+    </footer>
+
+    <div id="modal" class="modal" hidden>
+      <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <h2 id="modal-title"></h2>
+        <p id="modal-note" class="note" hidden></p>
+        <p class="muted">מה ייעשה:</p>
+        <ol id="modal-lines" class="plan"></ol>
+        <p id="modal-blocker" class="blocker" hidden></p>
+        <div class="actions">
+          <button id="modal-apply" class="primary">אישור וביצוע</button>
+          <button id="modal-cancel" class="secondary">ביטול</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>
