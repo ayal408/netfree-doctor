@@ -1,0 +1,38 @@
+{
+  "name": "netfree-doctor",
+  "version": "0.1.0",
+  "description": "Diagnose and safely fix \"doesn't work on Netfree\" problems (TLS/CA, blocks, injected notes) — explains in Hebrew. Never bypasses the filter.",
+  "license": "MIT",
+  "author": "ayal408",
+  "type": "module",
+  "bin": {
+    "netfree-doctor": "dist/cli/index.js"
+  },
+  "main": "dist/gui/main.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-gui-assets.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node dist/cli/index.js",
+    "gui": "npm run build && electron ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^24.19.2",
+    "electron": "^38.8.6",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^3.2.7"
+  }
+}
