@@ -8,7 +8,7 @@ export default tseslint.config(
   {
     files: ['src/gui/renderer/**/*.js', 'src/gui/preload.cjs'],
     languageOptions: {
-      globals: { window: 'readonly', document: 'readonly', require: 'readonly', console: 'readonly' },
+      globals: { window: 'readonly', document: 'readonly', require: 'readonly', console: 'readonly', setTimeout: 'readonly', clearTimeout: 'readonly' },
       sourceType: 'script',
     },
     rules: { '@typescript-eslint/no-require-imports': 'off' },
