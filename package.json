@@ -24,12 +24,39 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "start": "node dist/cli/index.js",
-    "gui": "npm run build && electron ."
+    "gui": "npm run build && electron .",
+    "dist:win": "npm run build && electron-builder --win nsis --x64 --publish never"
+  },
+  "build": {
+    "appId": "io.github.ayal408.netfree-doctor",
+    "productName": "netfree-doctor",
+    "copyright": "© ayal408, MIT",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "!dist/**/*.map",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "netfree-doctor",
+      "artifactName": "netfree-doctor-Setup-${version}.${ext}"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@types/node": "^24.19.2",
     "electron": "^38.8.6",
+    "electron-builder": "26.15.3",
     "eslint": "^9.39.5",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.71.1",
