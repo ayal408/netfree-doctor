@@ -1,6 +1,6 @@
 {
   "name": "netfree-doctor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Diagnose and safely fix \"doesn't work on Netfree\" problems (TLS/CA, blocks, injected notes) — explains in Hebrew. Never bypasses the filter.",
   "license": "MIT",
   "author": "ayal408",
